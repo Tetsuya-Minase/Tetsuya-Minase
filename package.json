@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "slidev build",
+    "build:prod": "slidev build --base /Tetsuya-Minase/",
     "dev": "slidev --open",
     "export": "slidev export"
   },

@@ -1,0 +1,32 @@
+name: merge main
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build static files.
+        id: build
+        run: npm install && npm build
+      - name: upload static files as artifact
+        id: deploy
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist/
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
